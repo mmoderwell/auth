@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ./partials/head %>
+        <link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <% include ./partials/header %>
+        </header>
+
+        <!--Main Content-->
+        <div class="row">
+            <div class="column">
+                <h1 style="text-align: center; margin-top: 20%;"><%= err.status %> Error</h1>
+                <br>
+                <p>
+                    Message:
+                    <%= err.message %>
+                </p>
+            </div>
+
+        </div>
+        <!--End of Main Content-->
+    </div>
+    <script src="/js/login.js" type="text/javascript"></script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ./partials/head %>
+        <link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <% include ./partials/header %>
+        </header>
+
+        <!--Main Content-->
+        <div class="row">
+            <div class="column column-20"></div>
+            <div class="column">
+                <div class="pop">
+                    <br>
+                    <p id="heading">Create an account with Sage
+                        <br><a href="/login" title="login">Already have an accout?</a></p>
+                    <p id="error">No errors</p>
+                    <form id="login_form" name="login_form">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input name="name" type="text" required="required" autocomplete="name" />
+                                <label class="control-label" for="input">name</label><i class="bar"></i>
+                            </div>
+                            <div class="form-group">
+                                <input name="email" type="text" required="required" autocomplete="email" />
+                                <label class="control-label" for="input">email</label><i class="bar"></i>
+                            </div>
+                            <div class="form-group">
+                                <input name="username" type="text" required="required" autocomplete="username" />
+                                <label class="control-label" for="input">username</label><i class="bar"></i>
+                            </div>
+
+                            <div class="form-group">
+                                <input name="password" type="password" required="required" autocomplete="new-password" />
+                                <label class="control-label" for="input">password</label><i class="bar"></i>
+                            </div>
+                        </div>
+                        <button type="button" class="button" id="signup"></button>
+                    </form>
+                </div>
+            </div>
+            <div class="column column-20"></div>
+        </div>
+        <!--End of Main Content-->
+    </div>
+    <script src="/js/signup.js" type="text/javascript"></script>
+</body>
+
+</html>

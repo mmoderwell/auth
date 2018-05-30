@@ -1,0 +1,204 @@
+/*------------------General Styles------------------*/
+
+.pop {
+    box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
+    padding: 4em;
+    border-radius: 4px;
+    margin-top: 25%;
+    background: #cee7ff;
+}
+
+/*------------------Form Styles------------------*/
+
+fieldset {
+    margin: 0 0 3rem;
+    padding: 0;
+    border: none;
+}
+.form-group {
+    position: relative;
+    margin-top: 2.25rem;
+    margin-bottom: 2.25rem;
+}
+.form-group input {
+    height: 3rem;
+}
+.form-group textarea {
+    resize: none;
+    height: 150px;
+}
+.form-group .control-label {
+    position: absolute;
+    top: 0.25rem;
+    pointer-events: none;
+    padding-left: 0.125rem;
+    z-index: 1;
+    color: #bbb;
+    font-size: 1.3rem;
+    font-weight: normal;
+    -webkit-transition: all 0.28s ease;
+    transition: all 0.28s ease;
+}
+.form-group .bar {
+    position: relative;
+    border-bottom: 0.12rem solid #999;
+    display: block;
+}
+.form-group .bar::before {
+    content: '';
+    height: 0.2rem;
+    width: 0;
+    left: 50%;
+    bottom: -0.1rem;
+    position: absolute;
+    background: #566b95;
+    -webkit-transition: left 0.28s ease, width 0.28s ease;
+    transition: left 0.28s ease, width 0.28s ease;
+    z-index: 2;
+}
+@-webkit-keyframes autofill {
+    to {
+        color: #666;
+        background: transparent;
+    }
+}
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
+.form-group input, .form-group textarea {
+    display: block;
+    background: none;
+    padding: 1.125rem 0.125rem 0.0625rem;
+    border-width: 0;
+    border-color: transparent;
+    line-height: 1;
+    width: 100%;
+    color: transparent;
+    -webkit-transition: all 0.28s ease;
+    transition: all 0.28s ease;
+    box-shadow: none;
+}
+.form-group input:focus, .form-group input:valid, .form-group input.form-file, .form-group input.has-value, .form-group textarea:focus, .form-group textarea:valid, .form-group textarea.form-file, .form-group textarea.has-value {
+    color: #333;
+}
+.form-group input:focus~.control-label, .form-group input:valid~.control-label, .form-group input.form-file~.control-label, .form-group input.has-value~.control-label, .form-group textarea:focus~.control-label, .form-group textarea:valid~.control-label, .form-group textarea.form-file~.control-label, .form-group textarea.has-value~.control-label {
+    font-size: 1.3rem;
+    color: gray;
+    top: -1.2rem;
+    left: 0;
+}
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+}
+.form-group input:focus~.control-label, .form-group textarea:focus~.control-label {
+    color: #566b95;
+}
+.form-group input:focus~.bar::before, .form-group textarea:focus~.bar::before {
+    width: 100%;
+    left: 0;
+}
+.has-error .legend.legend, .has-error.form-group .control-label.control-label {
+    color: #d9534f;
+}
+#error {
+    opacity: 0;
+    font-size: 1.3rem;
+    color: #d9534f;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+.has-error {
+    color: #d9534f;
+}
+.has-error .bar::before {
+    background: #d9534f;
+    left: 0;
+    width: 100%;
+}
+
+/*------------------Button Styles------------------*/
+
+button {
+    outline: none;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius: 40px;
+    background: #cee7ff;
+    border: 2px solid #566b95;
+    color: #566b95;
+    letter-spacing: 1px;
+    font-family: 'Hack', monospace;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+button:hover {
+    border-color: #566b95;
+    color: white;
+    background: #566b95;
+}
+button:active {
+    letter-spacing: 2px;
+}
+button:focus {
+    background: #cee7ff;
+    border: 2px solid #566b95;
+    color: #566b95;
+}
+#login:after {
+    content: "LOGIN";
+}
+#signup:after {
+    content: "SIGNUP";
+}
+.onclick {
+    padding: 0;
+    width: 40px;
+    border-color: #bbb;
+    border-width: 3px;
+    font-size: 0;
+    border-left-color: #566b95;
+    -webkit-animation: rotating 2s 0.25s linear infinite;
+    animation: rotating 2s 0.25s linear infinite;
+}
+.onclick:after {
+    content: "";
+}
+.onclick:focus {
+    border: 2px solid #bbb;
+    color: #566b95;
+    border-left-color: #566b95;
+}
+.validate {
+    font-size: 13px;
+    color: white;
+    background: #566b95;
+}
+.validate:after {
+    font-family: 'FontAwesome';
+    content: "\f00c";
+}
+@-webkit-keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes rotating {
+    from {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
