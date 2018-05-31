@@ -9,32 +9,6 @@ body {
 
 /*------------------Content Styles------------------*/
 
-.box {
-    background-color: #B2C4FF;
-    text-align: center;
-    box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
-}
-.content {
-    transition: outline-color 0.2s ease-in;
-    padding: 10% 0;
-    color: #424b69;
-    outline-color: transparent;
-}
-.content:hover {
-    outline: #f8f8ff solid 3px;
-}
-.img_box {
-    padding-top: 16px;
-}
-.img_content {
-    display: flex;
-    transition: outline-color 0.2s ease-in;
-    outline-color: transparent;
-    box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
-}
-.img_content:hover {
-    outline: #f8f8ff solid 3px;
-}
 
 /*------------------Loading Animation------------------*/
 
@@ -64,9 +38,8 @@ body {
 
 /*------------------Header Styles------------------*/
 
-#sage {
+#auth {
     padding: 6% 0;
-    font-family: 'Leckerli One', cursive;
     letter-spacing: .1em;
 }
 #personal {
