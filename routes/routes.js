@@ -1,8 +1,8 @@
-const weather = require('../controllers/weather');
-const unsplash = require('../controllers/unsplash');
 const users = require('../controllers/users');
 const info = require('../controllers/info');
 const passport = require('passport');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 module.exports = (app) => {
 	//user creation / login routes
@@ -19,10 +19,18 @@ module.exports = (app) => {
 			res.redirect('/login');
 		})
 	});
-	app.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }),
-		(req, res) => {
-			res.redirect('/');
-		});
+
+	// app.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }),
+	// 	(req, res) => {
+	// 		res.redirect('/');
+	// 	});
+
+	app.post('/login', upload.single('frame'), function(req, res, next) {
+		console.log('Request to save a frame.');
+		// req.file is the `face` file
+		// req.body will hold the text fields, if there were any
+	});
+
 	app.post('/signup', users.signup);
 
 	//logged in user routes
