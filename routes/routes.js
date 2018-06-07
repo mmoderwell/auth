@@ -1,10 +1,9 @@
 const users = require('../controllers/users');
 const info = require('../controllers/info');
 const passport = require('passport');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
 
 module.exports = (app) => {
+
 	//user creation / login routes
 	app.get('/signup', (req, res) => {
 		res.render('../views/signup.ejs');
@@ -17,23 +16,19 @@ module.exports = (app) => {
 		req.session.destroy(() => {
 			res.clearCookie('connect.sid');
 			res.redirect('/login');
-		})
-	});
-
-	// app.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }),
-	// 	(req, res) => {
-	// 		res.redirect('/');
-	// 	});
-
-	app.post('/login', upload.single('frame'), function(req, res, next) {
-		console.log('Request to save a frame.');
-		// req.file is the `face` file
-		// req.body will hold the text fields, if there were any
+		});
 	});
 
 	app.post('/signup', users.signup);
+	app.post('/face', users.frame, users.face);
+	app.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }),
+		(req, res) => {
+			console.log(req.body);
+			res.redirect('/');
+		});
 
 	//logged in user routes
+
 	app.get('/', (req, res) => {
 		//console.log(req.user);
 		//console.log(req.isAuthenticated());
@@ -43,5 +38,15 @@ module.exports = (app) => {
 			res.redirect('/login');
 		}
 	});
-	app.get('/profile', users.profile);
+	app.get('/train', (req, res) => {
+		//console.log(req.user);
+		//console.log(req.isAuthenticated());
+		if (req.isAuthenticated()) {
+			res.render('../views/train.ejs', { user: req.user });
+		} else {
+			res.redirect('/login');
+		}
+	});
+	app.post('/train', users.frames, users.train);
+
 }
