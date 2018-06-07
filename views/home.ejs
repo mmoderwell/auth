@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<% include ./partials/head %>
+		<link rel="stylesheet" type="text/css" href="/css/home.css">
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row">
+			<div class="column">
+				<div class="top_button">
+					<a href="/logout">Logout</a>
+				</div>
+			</div>
+		</div>
+
+		<!--Header-->
+		<% include ./partials/header %>
+
+			<!--Main Content-->
+			<div class="row">
+				<div class="column column-20"></div>
+				<div class="column">
+					<h4>Account Information</h4>
+					<p id="user_info" class="edit_button loading">Edit</p>
+					<ul>
+						<li>
+							<p>Name:
+								<span id="name"><%= user.name %></span></p>
+							</p>
+						</li>
+						<li>
+							<p>First Name:
+								<span id="email"><%= user.fname %></span></p>
+							</p>
+						</li>
+						<li>
+							<p>Last Name:
+								<span id="username"><%= user.lname %></span></p>
+							</p>
+						</li>
+					</ul>
+				</div>
+				<div class="column column-20"></div>
+			</div>
+			<!--End of Main Content-->
+	</div>
+	<script src="/js/profile.js" type="text/javascript"></script>
+</body>
+
+</html>
