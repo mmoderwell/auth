@@ -1,11 +1,9 @@
-let heading = document.getElementById('heading');
-let form = document.getElementById('login_form');
+let form = document.getElementById('signin_form');
 let signup_button = document.getElementById('signup');
-let name = document.forms["login_form"]["name"];
-let email = document.forms["login_form"]["email"];
-let username = document.forms["login_form"]["username"];
-let password = document.forms["login_form"]["password"];
+let fname = document.forms["signin_form"]["fname"];
+let lname = document.forms["signin_form"]["lname"];
 let error = document.getElementById('error');
+
 signup_button.addEventListener('click', validate);
 
 document.addEventListener("keydown", function(e) {
@@ -17,10 +15,7 @@ document.addEventListener("keydown", function(e) {
 });
 
 function validate() {
-    name = document.forms["login_form"]["name"];
-    email = document.forms["login_form"]["email"];
-
-    if (username.checkValidity() && password.checkValidity() && name.checkValidity() && validateEmail()) {
+    if (fname.checkValidity() && lname.checkValidity()) {
         signup_button.classList.add("onclick");
         send();
     } else {
@@ -40,37 +35,33 @@ function success() {
         error.innerHTML = 'No errors';
         error.style.color = '';
         signup_button.classList.remove("validate");
-        username.value = '';
-        password.value = '';
-        name.value = '';
-        email.value = '';
+        fname.value = '';
+        lname.value = '';
+
     }, 2000);
 }
 
 function failed() {
     error.style.opacity = '1';
     signup_button.classList.remove("onclick");
-    if (!username.value || !password.value || !name.value || !email.value) {
+    if (!fname.value || !lname.value) {
         error.innerHTML = 'Please fill out all the fields.';
-    }
-    if (!validateEmail() && name.value && username.value && password.value) {
-        error.innerHTML = 'Please enter a valid email.';
     }
 }
 
 function in_use() {
     error.style.opacity = '1';
     signup_button.classList.remove("onclick");
-    error.innerHTML = 'Username already in use. Pick a different one.';
-    username.value = '';
+    error.innerHTML = 'Name already in use. Pick a different one.';
+    fname.value = '';
+    lname.value = '';
 }
 
 function send() {
     const body = {
-        name: name.value,
-        email: email.value,
-        username: username.value,
-        password: password.value,
+        name: fname.value + lname.value,
+        fname: fname.value,
+        lname: lname.value,
     };
 
     var http = new XMLHttpRequest();
@@ -79,27 +70,14 @@ function send() {
     http.open('POST', `/signup`, true);
     http.setRequestHeader('Content-Type', 'application/json');
     http.send(JSON.stringify(body));
-
 }
 
 function res_listen() {
-    if (this.responseURL.endsWith('/')) {
+    console.log(this);
+    if (this.responseURL.endsWith('/train')) {
         success();
         window.location.replace(this.responseURL);
     } else {
         in_use();
-    }
-}
-
-function validateEmail() {
-    var x = email.value;
-    var atpos = x.indexOf("@");
-    var dotpos = x.lastIndexOf(".");
-    if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
-        email.setCustomValidity("Please enter a valid email.");
-        return false;
-    } else {
-        email.setCustomValidity("");
-        return true;
     }
 }
