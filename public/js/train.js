@@ -8,7 +8,7 @@ let buttons = document.getElementById('buttons');
 snap.addEventListener('click', add_frame);
 
 let data = new FormData();
-let count = 10;
+let count = 7;
 
 function getUserMedia() {
 	navigator.mediaDevices.getUserMedia({ video: true })
@@ -95,7 +95,7 @@ function send() {
 
 function res_listen() {
 	//console.log(this.response);
-	success(this.responseURL);
+    success(this.responseURL);
 }
 
 snap.classList.add("onclick");

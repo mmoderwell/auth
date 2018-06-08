@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 const storage_array = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, `../train/${req.user.fname}${req.user.lname}/`)
+        cb(null, `../train/${req.user.fname}_${req.user.lname}/`)
     },
     filename: function(req, file, cb) {
         //cb(null, file.originalname)
@@ -96,9 +96,8 @@ module.exports = {
     train(req, res, next) {
         //console.log(req.user.name);
         res.setHeader('Content-Type', 'text/html');
-        res.redirect('/');
-
-        let train_script = exec('sh train.sh',
+        return res.redirect('/');
+        let train_script = exec('sh train.sh ../auth_backend',
             (error, stdout, stderr) => {
                 console.log(`${stdout}`);
                 console.log(`${stderr}`);
@@ -107,6 +106,7 @@ module.exports = {
                 }
             });
         train_script();
+        return res.redirect('/');
     }
 };
 
