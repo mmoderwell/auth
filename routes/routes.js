@@ -21,10 +21,9 @@ module.exports = (app) => {
 
 	app.post('/signup', users.signup);
 	app.post('/face', users.frame, users.face);
-	app.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }),
+	app.post('/login', passport.authenticate('local', { successRedirect: '/' }),
 		(req, res) => {
-			console.log(req.body);
-			res.redirect('/');
+			//res.redirect('/');
 		});
 
 	//logged in user routes
