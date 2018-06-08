@@ -1,48 +1,113 @@
 const User = require('../models/user');
+//user authentication
 const passport = require('passport');
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+//child process, for python backend
+const exec = require('child_process').exec;
+//file upload handling
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, '../uploads/')
+    },
+    filename: function(req, file, cb) {
+        //cb(null, file.originalname)
+        cb(null, Date.now() + '.png')
+    },
+});
+const storage_array = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, `../train/${req.user.fname}${req.user.lname}/`)
+    },
+    filename: function(req, file, cb) {
+        //cb(null, file.originalname)
+        cb(null, Date.now() + '.png')
+    },
+});
+
+const upload = multer({ storage: storage });
+const upload_array = multer({ storage: storage_array });
+const fs = require('fs');
 
 module.exports = {
+
     signup(req, res, next) {
         const body = req.body;
-        const { name, email, username, password } = body;
+        const { fname, lname } = body;
+        const name = fname + ' ' + lname;
 
-        User.findOne({ username: username })
+        User.findOne({ name: name })
             .then((users) => {
                 if (users) {
                     res.setHeader('Content-Type', 'application/json');
                     res.send({ in_use: true });
                 } else {
-                    bcrypt.hash(password, saltRounds, function(err, hash) {
-                        // Store hash in your password DB.
-                        const user = new User({ name: name, email: email, username: username, password: hash });
-                        user.save()
-                            .then(() => {
-                                User.findOne({ username: user.username })
-                                    .then((user) => {
-                                        const id = user._id.toString();
-                                        console.log('Created new user: ' + id);
-                                        req.login(id, (err) => {
-                                            if (err) {console.log(err)}
-                                            res.setHeader('Content-Type', 'text/html');
-                                            res.redirect('/');
-                                        });
+
+                    let folder_path = "../train/" + fname + lname + "/";
+                    if (!fs.existsSync(folder_path)) {
+                        fs.mkdirSync(folder_path);
+                    }
+                    //Store user in DB
+                    const user = new User({ name: name, fname: fname, lname: lname });
+                    user.save()
+                        .then(() => {
+                            User.findOne({ name: user.name })
+                                .then((user) => {
+                                    const id = user._id.toString();
+                                    console.log('Created new user: ' + id);
+                                    req.login(id, (err) => {
+                                        if (err) { console.log(err) }
+                                        res.setHeader('Content-Type', 'text/html');
+                                        res.redirect('/train');
                                     });
-                            });
-                       //console.log('New user: ' + user);
-                    });
+                                });
+                        });
+                    console.log('New user: ' + user);
                 }
             });
     },
-    profile(req, res, next) {
-        if (req.isAuthenticated()) {
-            res.render('../views/profile.ejs', { user: req.user });
-        } else {
-            res.redirect('/login');
+
+    frame: upload.single('frame'),
+
+    face(req, res, next) {
+        console.log('Saved a frame: ' + req.file.filename);
+        frame_name = req.file.filename;
+        let tries = 0;
+        let max_tries = 30; //equivalent to 4 seconds
+
+        function get_name() {
+            let file = fs.readFileSync("../uploads/output.json");
+            file = JSON.parse(file);
+            if (file[frame_name]) {
+                res.send(file[frame_name]);
+                res.end();
+            } else {
+                setTimeout(get_name, 200);
+                tries += 1;
+            }
+            if (tries == max_tries) {
+                res.send({ failed: true });
+            }
         }
+        setTimeout(get_name, 200);
+    },
+
+    frames: upload_array.array('frame', 10),
+
+    train(req, res, next) {
+        //console.log(req.user.name);
+        res.setHeader('Content-Type', 'text/html');
+        res.redirect('/');
+
+        let train_script = exec('sh train.sh',
+            (error, stdout, stderr) => {
+                console.log(`${stdout}`);
+                console.log(`${stderr}`);
+                if (error !== null) {
+                    console.log(`exec error: ${error}`);
+                }
+            });
     }
-}
+};
 
 passport.serializeUser(function(id, done) {
     //console.log(id + ' serialized');
