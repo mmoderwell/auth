@@ -25,7 +25,19 @@ module.exports = (app) => {
 		(req, res) => {
 			//res.redirect('/');
 		});
-
+	app.get('/exec', () => {
+		let train_script = exec('sh train.sh ../auth_backend',
+			(error, stdout, stderr) => {
+				console.log(`${stdout}`);
+				console.log(`${stderr}`);
+				if (error !== null) {
+					console.log(`exec error: ${error}`);
+					res.send({ success: false });
+				}
+			});
+		train_script();
+		return res.send({ success: false });
+	})
 	//logged in user routes
 
 	app.get('/', (req, res) => {

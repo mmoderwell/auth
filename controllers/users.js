@@ -97,16 +97,6 @@ module.exports = {
         //console.log(req.user.name);
         res.setHeader('Content-Type', 'text/html');
         return res.redirect('/');
-        let train_script = exec('sh train.sh ../auth_backend',
-            (error, stdout, stderr) => {
-                console.log(`${stdout}`);
-                console.log(`${stderr}`);
-                if (error !== null) {
-                    console.log(`exec error: ${error}`);
-                }
-            });
-        train_script();
-        return res.redirect('/');
     }
 };
 
