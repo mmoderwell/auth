@@ -18,24 +18,31 @@
             <div class="column">
                 <div class="pop">
                     <br>
-                    <div id="heading">
-                        <p>Log in to Auth
-                            <br>or <a href="" id="new_account" onClick="return false;" title="create an account">create an account</a></p>
-                        <p id="error">No errors</p>
+                    <div id="heading" class="row">
+                        <div class="column">
+                            <p>Log in to Auth
+                                <br>or <a href="" id="new_account" onClick="return false;" title="create an account">create an account</a></p>
+                            <p id="error">No errors</p>
+                            <button type="button" class="button" id="login"></button>
+                        </div>
+                        <div class="column">
+                            <!-- <p>Video Feed</p>
+<p><a href="" id="toggle_feed" onClick="return false;" title="">turn off</a></p>
+<p>select input</p> -->
+                            <!-- <input type="checkbox" id="feed" />
+                            <label class="slider" for="feed"></label> -->
+                        </div>
                     </div>
                 </div>
                 <br>
-                <video id="gum-local" autoplay playsinline></video>
-                <canvas id="canvas">
-                </canvas>
-                <img id="photo" alt="The screen capture will appear in this box.">
+                <video id="video" autoplay playsinline></video>
             </div>
             <div class="column column-20"></div>
         </div>
         <!--End of Main Content-->
     </div>
+    <script src="/js/capture-frame.js" type="text/javascript"></script>
     <script src="/js/login.js" type="text/javascript"></script>
-    <script src="/js/media.js" type="text/javascript"></script>
 </body>
 
 </html>

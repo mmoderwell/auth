@@ -18,31 +18,22 @@
             <div class="column">
                 <div class="pop">
                     <br>
-                    <p id="heading">Create an account with Sage
-                        <br><a href="/login" title="login">Already have an accout?</a></p>
-                    <p id="error">No errors</p>
-                    <form id="login_form" name="login_form">
-                        <div class="form-group">
+                    <div id="heading">
+                        <p id="">Create an account with Auth
+                            <br><a href="/login" title="login">Already have an accout?</a></p>
+                        <p id="error">No errors</p>
+                        <form id="signin_form" name="signin_form">
                             <div class="form-group">
-                                <input name="name" type="text" required="required" autocomplete="name" />
-                                <label class="control-label" for="input">name</label><i class="bar"></i>
+                                <input name="fname" type="text" required="required" autocomplete="fname" />
+                                <label class="control-label" for="input">first name</label><i class="bar"></i>
                             </div>
                             <div class="form-group">
-                                <input name="email" type="text" required="required" autocomplete="email" />
-                                <label class="control-label" for="input">email</label><i class="bar"></i>
+                                <input name="lname" type="text" required="required" autocomplete="lname" />
+                                <label class="control-label" for="input">last name</label><i class="bar"></i>
                             </div>
-                            <div class="form-group">
-                                <input name="username" type="text" required="required" autocomplete="username" />
-                                <label class="control-label" for="input">username</label><i class="bar"></i>
-                            </div>
-
-                            <div class="form-group">
-                                <input name="password" type="password" required="required" autocomplete="new-password" />
-                                <label class="control-label" for="input">password</label><i class="bar"></i>
-                            </div>
-                        </div>
-                        <button type="button" class="button" id="signup"></button>
-                    </form>
+                            <button type="button" class="button" id="signup"></button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="column column-20"></div>

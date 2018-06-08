@@ -4,6 +4,7 @@
 <head>
 	<% include ./partials/head %>
 		<link rel="stylesheet" type="text/css" href="/css/train.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/font-hack/2.020/css/hack.min.css">
 </head>
 
 <body>
@@ -32,11 +33,12 @@
 							<div class="column">
 								<div id="intro">
 									<h3>Training the system</h3>
-									<p>Let's get 10 good shots of you.</p>
+									<p id="directions">Let's get 10 good shots of you.</p>
 								</div>
-
 								<p id="error">No errors</p>
-								<button type="button" class="button" id="snapshot"></button>
+								<div id="buttons">
+									<button type="button" class="button" id="snapshot"></button>
+								</div>
 							</div>
 							<div class="column">
 								<p id="counter"><span id="count">10</span> left</p>
