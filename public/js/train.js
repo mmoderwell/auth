@@ -2,11 +2,13 @@ let error = document.getElementById('error');
 let video = document.querySelector('video');
 let snap = document.getElementById('snapshot');
 let counter = document.getElementById('count');
+let directions = document.getElementById('directions');
+let buttons = document.getElementById('buttons');
 
 snap.addEventListener('click', add_frame);
 
 let data = new FormData();
-let count = 2;
+let count = 10;
 
 function getUserMedia() {
 	navigator.mediaDevices.getUserMedia({ video: true })
@@ -14,12 +16,17 @@ function getUserMedia() {
 			document.querySelector('video').srcObject = mediaStream;
 			const track = mediaStream.getVideoTracks()[0];
 			window.stream = track;
+			if (window.stream.enabled) {
+				snap.classList.remove("onclick");
+				snap.addEventListener('click', add_frame);
+			};
 		})
 		.catch(error => console.log(error));
 }
 
-function success() {
-	error.innerHTML = 'You\'re in.';
+function success(responseURL) {
+	snap.remove();
+	error.innerHTML = 'Training the system.';
 	error.style.opacity = '1';
 	error.style.color = '#6EC867';
 	snap.classList.remove("onclick");
@@ -28,8 +35,9 @@ function success() {
 		error.style.opacity = '0';
 		error.innerHTML = 'No errors';
 		error.style.color = '';
-		snap.classList.remove("validate");
-	}, 2000);
+		//snap.classList.remove("validate");
+		window.location.replace(responseURL);
+	}, 4000);
 }
 
 function added() {
@@ -45,13 +53,18 @@ function added() {
 		snap.classList.remove("onclick");
 		//snap.classList.remove("validate");
 		if (count === 0) {
-			snap.removeEventListener('click', add_frame);
+			document.getElementById('counter').innerHTML = '';
+			directions.innerHTML = 'Ready to train.';
+			snap.remove();
+			let button_snippet = document.createRange().createContextualFragment(`<button type="button" class='button' id="train"></button>`);
+			buttons.appendChild(button_snippet);
+			snap = document.getElementById('train');
 			snap.addEventListener('click', send);
 		} else {
 			snap.addEventListener('click', add_frame);
 		}
 
-	}, 2000);
+	}, 1000);
 }
 
 function failed(err) {
@@ -71,7 +84,6 @@ function add_frame() {
 }
 
 function send() {
-	snap.removeEventListener('click', add_frame);
 	snap.removeEventListener('click', send);
 	snap.classList.add("onclick");
 	let http = new XMLHttpRequest();
@@ -82,8 +94,9 @@ function send() {
 }
 
 function res_listen() {
-	console.log(this.response);
-	snap.classList.remove("onclick");
+	//console.log(this.response);
+	success(this.responseURL);
 }
 
+snap.classList.add("onclick");
 getUserMedia();

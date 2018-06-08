@@ -15,6 +15,11 @@ function getUserMedia() {
 			document.querySelector('video').srcObject = mediaStream;
 			const track = mediaStream.getVideoTracks()[0];
 			window.stream = track;
+
+			if (window.stream.enabled) {
+				login.classList.remove("onclick");
+				login.addEventListener('click', send);
+			};
 		})
 		.catch(error => console.log(error));
 }
@@ -57,7 +62,7 @@ function failed(err) {
 }
 
 function send() {
-	console.log('Send');
+	//console.log('Send');
 	login.removeEventListener('click', send);
 	login.classList.add("onclick");
 	let http = new XMLHttpRequest();
@@ -73,7 +78,7 @@ function send() {
 
 function res_listen() {
 	//console.log(this.response);
-	if (!this.response.success) {
+	if (this.response.failed) {
 		failed('Facial recognition backend offline');
 		login.addEventListener('click', send);
 	} else {
@@ -94,9 +99,15 @@ function res_listen() {
 }
 
 function res_listen_login() {
-	success();
-	login.addEventListener('click', send);
-	window.location.replace(this.responseURL);
+	console.log(this);
+	if (this.responseURL.endsWith('/')) {
+		success();
+		window.location.replace(this.responseURL);
+	} else if (this.status === 401) {
+		login.addEventListener('click', send);
+		failed('No face recognized.');
+	}
 }
 
+login.classList.add("onclick");
 getUserMedia();

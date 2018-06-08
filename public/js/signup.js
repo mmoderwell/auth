@@ -73,7 +73,7 @@ function send() {
 }
 
 function res_listen() {
-    console.log(this);
+    //console.log(this);
     if (this.responseURL.endsWith('/train')) {
         success();
         window.location.replace(this.responseURL);

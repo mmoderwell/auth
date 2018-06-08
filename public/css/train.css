@@ -5,7 +5,7 @@
 	padding: 0;
 	border-radius: 4px;
 	margin-top: 7%;
-	background: #e7e7e7;
+	background: #fff;
 }
 #video {
 	float: right;
@@ -24,6 +24,11 @@
 	color: #d9534f;
 	-webkit-transition: all 0.25s ease;
 	transition: all 0.25s ease;
+}
+#counter {
+	font-family: 'Bree Serif', serif;
+	font-size: 3em;
+	text-align: center;
 }
 
 /*------------------Button Styles------------------*/
@@ -61,6 +66,9 @@ button:focus {
 #snapshot:after {
 	content: "SNAPSHOT";
 }
+#train:after {
+	content: "TRAIN";
+}
 .onclick {
 	padding: 0;
 	width: 40px;
@@ -68,8 +76,8 @@ button:focus {
 	border-width: 3px;
 	font-size: 0;
 	border-left-color: #566b95;
-	-webkit-animation: rotating 2s 0.25s linear infinite;
-	animation: rotating 2s 0.25s linear infinite;
+	-webkit-animation: rotating 2s 0.125s linear infinite;
+	animation: rotating 2s 0.125s linear infinite;
 }
 .onclick:after {
 	content: "";

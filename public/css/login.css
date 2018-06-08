@@ -5,15 +5,21 @@
     padding: 0;
     border-radius: 4px;
     margin-top: 7%;
-    background: #e7e7e7;
+    background: #fff;
 }
-#gum-local {
+#video {
     float: right;
     width: 100%;
     box-shadow: 9px 7px 40px -6px rgba(0, 0, 0, 0.25);
 }
 #heading {
-    padding: 0 4em 0 4em;
+    padding: 0 4em 2em 4em;
+}
+#login_form {
+    padding: 0 4em 4em 4em;
+}
+#signin_form {
+    padding: 0 0 0 0;
 }
 
 /*------------------Form Styles------------------*/
