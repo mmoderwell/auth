@@ -65,6 +65,10 @@ app.use((req, res, next) => {
 passport.use(new LocalStrategy(
 	(username, password, done) => {
 		const User = require('./models/user');
+		if (username == 'None') {
+			//console.log('No face found');
+			return done({ face: false }, false);
+		}
 		User.findOne({ name: username }, function(err, user) {
 			if (err) return done(err);
 			if (!user) {
