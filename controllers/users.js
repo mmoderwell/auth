@@ -42,7 +42,7 @@ module.exports = {
                     res.send({ in_use: true });
                 } else {
 
-                    let folder_path = "../train/" + fname + lname + "/";
+                    let folder_path = "../train/" + fname + '_' + lname + "/";
                     if (!fs.existsSync(folder_path)) {
                         fs.mkdirSync(folder_path);
                     }
@@ -106,6 +106,7 @@ module.exports = {
                     console.log(`exec error: ${error}`);
                 }
             });
+        train_script();
     }
 };
 

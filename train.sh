@@ -1,2 +1,2 @@
 #!/bin/sh
-python ../face_backend/auth2.py
+python3 ../face_backend/preprocess.py
