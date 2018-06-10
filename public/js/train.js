@@ -25,19 +25,17 @@ function getUserMedia() {
 }
 
 function success(responseURL) {
+	document.getElementById('status').innerHTML = 'Training complete.';
 	snap.remove();
-	error.innerHTML = 'Training the system.';
+	error.innerHTML = 'All done.';
 	error.style.opacity = '1';
 	error.style.color = '#6EC867';
 	snap.classList.remove("onclick");
 	snap.classList.add("validate");
 	setTimeout(() => {
-		error.style.opacity = '0';
-		error.innerHTML = 'No errors';
-		error.style.color = '';
 		//snap.classList.remove("validate");
 		window.location.replace(responseURL);
-	}, 4000);
+	}, 1000);
 }
 
 function added() {
@@ -52,6 +50,9 @@ function added() {
 		error.innerHTML = 'No errors';
 		snap.classList.remove("onclick");
 		//snap.classList.remove("validate");
+		if (count === 3) {
+			directions.innerHTML = 'Try slightly different angles too.';
+		}
 		if (count === 0) {
 			document.getElementById('counter').innerHTML = '';
 			directions.innerHTML = 'Ready to train.';
@@ -89,13 +90,16 @@ function send() {
 	let http = new XMLHttpRequest();
 	http.addEventListener("load", res_listen);
 	http.open('POST', '/train', true);
-
 	http.send(data);
+
+	directions.remove();
+	let loading = document.createRange().createContextualFragment('<p class="loading" id="status">Training<span>.</span><span>.</span><span>.</span></p>');
+	loading = document.getElementById('intro').appendChild(loading);
 }
 
 function res_listen() {
 	//console.log(this.response);
-    success(this.responseURL);
+	success(this.responseURL);
 }
 
 snap.classList.add("onclick");
