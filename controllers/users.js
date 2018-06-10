@@ -2,7 +2,7 @@ const User = require('../models/user');
 //user authentication
 const passport = require('passport');
 //child process, for python backend
-const exec = require('child_process').exec;
+const process = require('child_process');
 //file upload handling
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -95,6 +95,18 @@ module.exports = {
 
     train(req, res, next) {
         //console.log(req.user.name);
+
+         console.log('Starting train script.');
+         const process = child_process.spawn('../auth_backend/train.sh');
+         process.on('exit', () => {
+                  console.log('Script finished.');
+              });
+         process.stdout.on('data', (data) => {
+                  console.log('Output: ' + data.toString('utf8'));
+              });
+         process.stderr.on('data', (data) => {
+                  console.log('Error: ' + data.toString('utf8'));
+              });
         res.setHeader('Content-Type', 'text/html');
         return res.redirect('/');
     }

@@ -1,6 +1,7 @@
 const users = require('../controllers/users');
 const info = require('../controllers/info');
 const passport = require('passport');
+const child_process = require('child_process');
 
 module.exports = (app) => {
 
@@ -25,18 +26,19 @@ module.exports = (app) => {
 		(req, res) => {
 			//res.redirect('/');
 		});
-	app.get('/exec', () => {
-		let train_script = exec('sh train.sh ../auth_backend',
-			(error, stdout, stderr) => {
-				console.log(`${stdout}`);
-				console.log(`${stderr}`);
-				if (error !== null) {
-					console.log(`exec error: ${error}`);
-					res.send({ success: false });
-				}
-			});
-		train_script();
-		return res.send({ success: false });
+	app.get('/exec', (req, res) => {
+        console.log('Starting train script.');
+        const process = child_process.spawn('../auth_backend/train.sh');
+        process.on('exit', () => {
+            console.log('Script finished.');
+            return res.send({sucess: true})
+        });
+        process.stdout.on('data', (data) => {
+            console.log('Output: ' + data.toString('utf8'));
+        });
+        process.stderr.on('data', (data) => {
+            console.log('Error: ' + data.toString('utf8'));
+        });
 	})
 	//logged in user routes
 
