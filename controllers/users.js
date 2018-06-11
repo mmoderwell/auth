@@ -24,7 +24,7 @@ const storage_array = multer.diskStorage({
 		cb(null, Date.now() + '.png');
 	},
 });
-
+const backend = require('../backend');
 const upload = multer({ storage: storage });
 const upload_array = multer({ storage: storage_array });
 const fs = require('fs');
@@ -94,11 +94,12 @@ module.exports = {
 	frames: upload_array.array('frame', 10),
 
 	train(req, res, next) {
-		backend.identify.kill('SIGINT');
+		backend.identify.kill();
 		console.log('Starting train script.');
 		const process = child_process.spawn('../auth_backend/train.sh');
 		process.on('exit', () => {
 			console.log('Script finished.');
+            backend.identify = null;
 			backend.identify = child_process.spawn('../auth_backend/identify.sh');
 			req.logout();
 			req.session.destroy(() => {

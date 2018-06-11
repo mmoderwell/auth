@@ -1,6 +1,7 @@
 const child_process = require('child_process');
 
 let backend = {};
+console.log('Starting face classifier.');
 backend.identify = child_process.spawn('../auth_backend/identify.sh');
 backend.identify.on('exit', () => {
 	console.log('Classifier script finished.');

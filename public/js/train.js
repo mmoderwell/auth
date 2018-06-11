@@ -98,8 +98,8 @@ function send() {
 }
 
 function res_listen() {
-	console.log(this.response);
-	//success(this.responseURL);
+	//console.log(this.response);
+	success(this.responseURL);
 }
 
 snap.classList.add("onclick");
