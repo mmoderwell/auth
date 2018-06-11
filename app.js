@@ -33,6 +33,18 @@ mongoose.connect(mongo_uri).then(() => console.log('Connected to mongodb.'))
 mongoose.connection.on('disconnected', function() {
 	console.log('Connection to mongodb is disconnected.');
 });
+
+app.identify = child_process.spawn('../auth_backend/identify.sh');
+app.identify.on('exit', () => {
+	console.log('Classifier script finished.');
+});
+app.identify.stdout.on('data', (data) => {
+	console.log('Classifer out: ' + data.toString('utf8'));
+});
+app.identify.stderr.on('data', (data) => {
+	console.log('Classifier error: ' + data.toString('utf8'));
+});
+
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
