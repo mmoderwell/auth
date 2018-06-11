@@ -15,6 +15,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const MongoDBStore = require('connect-mongodb-session')(session);
 
+const child_process = require('child_process');
 let mongo_uri;
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV === 'DEVELOPMENT') {
@@ -33,7 +34,6 @@ mongoose.connection.on('disconnected', function() {
 	console.log('Connection to mongodb is disconnected.');
 });
 app.identify = child_process.spawn('../auth_backend/identify.sh');
-console.log('Starting classifier script.');
 app.identify.on('exit', () => {
 	console.log('Classifier script finished.');
 });

@@ -105,8 +105,11 @@ function res_listen_login() {
 		window.location.replace(this.responseURL);
 	} else if (this.status === 401) {
 		login.addEventListener('click', send);
-		failed('No face recognized.');
-	}
+		failed('Face not recognized.');
+	} else if (this.status === 500) {
+        login.addEventListener('click', send);
+        failed('No face found.');
+    }
 }
 
 login.classList.add("onclick");

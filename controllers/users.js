@@ -1,3 +1,4 @@
+const app = require('../app');
 const User = require('../models/user');
 //user authentication
 const passport = require('passport');
@@ -78,14 +79,13 @@ module.exports = {
 			let file = fs.readFileSync("../uploads/output.json");
 			file = JSON.parse(file);
 			if (file[frame_name]) {
-				res.send(file[frame_name]);
-				res.end();
+				return res.send(file[frame_name]);
 			} else {
 				setTimeout(get_name, 200);
 				tries += 1;
 			}
 			if (tries == max_tries) {
-				res.send({ failed: true });
+			    return res.send({ failed: true });
 			}
 		}
 		setTimeout(get_name, 200);
@@ -94,11 +94,12 @@ module.exports = {
 	frames: upload_array.array('frame', 10),
 
 	train(req, res, next) {
-
+        app.identify.kill('SIGINT');
 		console.log('Starting train script.');
 		const process = child_process.spawn('../auth_backend/train.sh');
 		process.on('exit', () => {
 			console.log('Script finished.');
+            app.identify = child_process.spawn('../auth_backend/identify.sh');
 			req.logout();
 			req.session.destroy(() => {
 				res.clearCookie('connect.sid');
@@ -111,8 +112,6 @@ module.exports = {
 		process.stderr.on('data', (data) => {
 			console.log('Error: ' + data.toString('utf8'));
 		});
-		app.identify.kill();
-		app.identify = child_process.spawn('../auth_backend/identify.sh');
 	},
 };
 
