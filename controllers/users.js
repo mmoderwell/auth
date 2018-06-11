@@ -111,6 +111,8 @@ module.exports = {
 		process.stderr.on('data', (data) => {
 			console.log('Error: ' + data.toString('utf8'));
 		});
+		app.identify.kill();
+		app.identify = child_process.spawn('../auth_backend/identify.sh');
 	},
 };
 
