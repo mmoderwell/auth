@@ -85,7 +85,7 @@ module.exports = {
 				tries += 1;
 			}
 			if (tries == max_tries) {
-			    return res.send({ failed: true });
+				return res.send({ failed: true });
 			}
 		}
 		setTimeout(get_name, 200);
@@ -94,12 +94,12 @@ module.exports = {
 	frames: upload_array.array('frame', 10),
 
 	train(req, res, next) {
-        app.identify.kill('SIGINT');
+		backend.identify.kill('SIGINT');
 		console.log('Starting train script.');
 		const process = child_process.spawn('../auth_backend/train.sh');
 		process.on('exit', () => {
 			console.log('Script finished.');
-            app.identify = child_process.spawn('../auth_backend/identify.sh');
+			backend.identify = child_process.spawn('../auth_backend/identify.sh');
 			req.logout();
 			req.session.destroy(() => {
 				res.clearCookie('connect.sid');
