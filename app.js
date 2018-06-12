@@ -15,7 +15,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const MongoDBStore = require('connect-mongodb-session')(session);
 
-const child_process = require('child_process');
 let mongo_uri;
 mongoose.Promise = global.Promise;
 if (process.env.NODE_ENV === 'DEVELOPMENT') {
@@ -32,17 +31,6 @@ mongoose.connect(mongo_uri).then(() => console.log('Connected to mongodb.'))
 //the database connection is disconnected
 mongoose.connection.on('disconnected', function() {
 	console.log('Connection to mongodb is disconnected.');
-});
-
-app.identify = child_process.spawn('../auth_backend/identify.sh');
-app.identify.on('exit', () => {
-	console.log('Classifier script finished.');
-});
-app.identify.stdout.on('data', (data) => {
-	console.log('Classifer out: ' + data.toString('utf8'));
-});
-app.identify.stderr.on('data', (data) => {
-	console.log('Classifier error: ' + data.toString('utf8'));
 });
 
 // set the view engine to ejs
